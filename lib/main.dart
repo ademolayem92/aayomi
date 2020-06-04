@@ -8,25 +8,15 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 final TextEditingController _controller = TextEditingController();
+final FocusNode _focusNode = FocusNode(canRequestFocus: true);
+const TextInputType _textInputType = TextInputType.numberWithOptions(
+    signed: false,
+    decimal: false);
+final TextEditingController _controllerTwo = TextEditingController();
+final FocusNode _focusNodeTwo = FocusNode(canRequestFocus: true);
+
 
 class _MyAppState extends State<MyApp> {
-  FocusNode myFocusNode;
-// focusNode function was initiated
-  @override
-  void initState() {
-    super.initState();
-
-    myFocusNode = FocusNode();
-  }
-
-  @override
-  void dispose() {
-    // Clean up the focus node when the Form is disposed.
-    myFocusNode.dispose();
-
-    super.dispose();
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -34,24 +24,33 @@ class _MyAppState extends State<MyApp> {
         home: Scaffold(
         backgroundColor: Colors.teal,
         body: SafeArea(
-        child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
+          scrollDirection: Axis.vertical,
         children: <Widget>[
-        Row(
+             Center(
+               child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             AnimatedContainer(
-              width:  40,
-              child: Image.asset('images/heartBeat.png'),
-              duration: Duration(milliseconds: 500),
+                  width:  40,
+                  child: Image.asset('images/heartBeat.png'),
+                  duration: Duration(milliseconds: 500),
             ),
           ],
         ),
-    CircleAvatar(
+             ),
+
+           Center(
+             child: Container(
+                  child: CircleAvatar(
     radius: 50.0,
     backgroundImage: AssetImage('images/ayomini.jpg'),
     ),
-    Text('Adesanya Anuoluwapo',
+              ),
+           ),
+             Center(
+               child: Container(
+                 child: Text('Adesanya Anuoluwapo',
     style: TextStyle(
     fontFamily: 'Pacifico',
     fontSize: 25.0,
@@ -59,31 +58,48 @@ class _MyAppState extends State<MyApp> {
     fontWeight: FontWeight.bold,
     ),
     ),
-    Text('WAREHOUSE SUPERVISOR',
+               ),
+             ),
+              Center(
+                child: Container(
+                  child: Text('WAREHOUSE SUPERVISOR',
     style: TextStyle(
     fontFamily: 'Caveat',
     color: Colors.teal.shade100,
     fontSize: 15.0,
     letterSpacing: 2.5,
     fontWeight: FontWeight.bold,
-    ),),
-    SizedBox(height: 15.0,
-    width: 150.0,
-    child: Divider(
-    color: Colors.teal.shade100,
-    ),),
-    Card(
-    margin: EdgeInsets.symmetric(vertical: 15.0,
+    ),),),
+              ),
+
+
+              Center(
+                child: SizedBox(height: 30.0,
+                  width: 150.0,
+                  child: Divider(
+                    color: Colors.teal.shade100,
+                  ),
+                  ),
+              ),
+
+           Card(
+    margin: EdgeInsets.symmetric(vertical: 20.0,
     horizontal: 25.0),
-    child: ListTile(
-    leading: Icon(Icons.phone,
-    color: Colors.teal,),
-    title: EditableText(
-      focusNode: myFocusNode, // I import the fucnction to create a focusNode
-                              //and pass it here it here
+                  child: ListTile(
+                 leading: Icon(Icons.phone,
+                  color: Colors.teal,),
+                 title: EditableText(
+      focusNode: _focusNode,// I import the function to create a
+                   // focusNode
+                                //and pass it here it here
       cursorColor: Colors.amber,
-      controller: _controller,
+      controller: _controller, //obscureText:(bool) is used to hide
+                   // text
       enableInteractiveSelection: true,
+      toolbarOptions: const ToolbarOptions(copy: true,cut: true,
+          paste: true,selectAll: true),
+      autocorrect: true,
+      keyboardType: _textInputType,
       expands: false,
       forceLine: true,
       readOnly: false,
@@ -96,33 +112,58 @@ class _MyAppState extends State<MyApp> {
     ,
     )
     ),
-    Card(
-    margin: EdgeInsets.symmetric(vertical: 20.0,
-    horizontal: 25.0),
-    child: ListTile(
-    leading: Icon(Icons.email,
-    color: Colors.teal,
-    ),
-    title: Text(
-    'adesanyaharnu@gmail.com',
-    style: TextStyle(
-    fontSize: 18.0,
-    color: Colors.teal.shade900,
-    fontFamily: 'Caveat')
-    ),
-    )
-    ),
-          Row(crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              AnimatedContainer(
-                duration: Duration(milliseconds: 500),
-                margin: EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 10.0,),
-                width:  40,
-                child: Image.asset('images/heartBeat.png'),
 
+          Card(
+      margin: EdgeInsets.symmetric(vertical: 20.0,
+      horizontal: 25.0), child: ListTile(
+      leading: Icon(Icons.email,
+      color: Colors.teal,
+      ),
+      title: EditableText(
+          maxLines: 1,
+          minLines: null,
+          focusNode: _focusNodeTwo,
+          cursorColor: Colors.amber,
+          forceLine: true,
+          controller: _controllerTwo,
+          backgroundCursorColor: Colors.teal,
+      style: TextStyle(
+      fontSize: 18.0,
+      color: Colors.teal.shade900,
+      fontFamily: 'Caveat')
+      ),
+      )
+      ),
+
+          Center(
+            child: Row(crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Container(
+                    child: AnimatedContainer(
+                      margin: EdgeInsets.fromLTRB(10.0, 10.0,90.0, 10.0,),
+                      duration: Duration(milliseconds: 500),
+                      width:  40,
+                      child: Image.asset('images/heartBeat.png'),
+
+                    ),
+
+                  ),
+                    Container(
+                      child: AnimatedContainer(
+                      margin: EdgeInsets.fromLTRB(40.0, 5.0, 10.0, 10.0,),
+                      duration: Duration(seconds: 10),
+                      width:  100,
+                      child: Image.asset('images/heartBeat.png'),
+
+
+                    ),
+                  ),
+
+                ],
               ),
-            ],
           ),
+
 
         ],
     )
@@ -131,7 +172,5 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-
 
 
