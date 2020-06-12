@@ -24,6 +24,7 @@ flutter:
     - images/heartsMi.jpg
     - images/heartBeat.png
 
+
   fonts:
     - family: Pacifico
       fonts:
